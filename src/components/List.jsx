@@ -1,12 +1,18 @@
 
 import React from 'react'
+import styles from './List.module.css'
 
-export class List extends React.Component {
-    render(){
-        return(
-            <ul>
-
-            </ul>
-        )
-    }
+export const List = (props) => {
+    return(
+        <ul className = {styles.list}>
+            {props.options.map((option,i)=>(
+                <li 
+                    className = {styles.option}
+                    key = {'listoption'+i}
+                > 
+                    {option} 
+                </li>
+            ))}
+        </ul>
+    )
 }

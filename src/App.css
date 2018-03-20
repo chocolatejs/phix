@@ -2,6 +2,14 @@
 
 *{
     box-sizing: border-box;
-    font-size: 24px;
+    font-size: 16px;
     font-family: 'Work Sans', sans-serif;
+    letter-spacing: 0.25px;
+}
+
+:root{
+    --faintpurple: #f5f6ff;
+    --actionpurple: #809cff;
+    --textpurple: #352852;
+    --mediumpurple: #8791C7;
 }

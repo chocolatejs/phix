@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
 
+
+import SelectAccounts from './workflows/onboarding/SelectAccounts'
+
 import {Header} from './components/Header'
-import {List} from './components/List'
+// import {List} from './components/List'
 
 import './App.css'
 import styles from './App.module.css';
@@ -48,11 +51,7 @@ class App extends Component {
           display = {true}
           title = "Bring your data together"
         />
-        <List
-          options = {[
-
-          ]}
-        />
+        <SelectAccounts />
         
       </div>
     );

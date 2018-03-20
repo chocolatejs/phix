@@ -1,0 +1,7 @@
+.list{
+    width: 100%;
+    list-style-type: none;
+    .option{
+        /*list-style-type: none;*/
+    }
+}

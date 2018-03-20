@@ -2,19 +2,20 @@
     
 }
 .accountTypeItem{
+    padding: 10px;
     display: flex;
     align-items: center;
-    .icon{
-
-    }
-    .text{
-        .title{
-            font-size: 16px;
-            color: #352852;
-        }
-        .examples{
-            font-size: 13px;
-            color: #8791C7;
-        }
-    }
+    
+}
+.title{
+    color: var(--textpurple);
+    font-size: 1rem;
+}
+.examples{
+    color: var(--mediumpurple);
+    font-size: .8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;;
+    max-width: 240px;
 }
