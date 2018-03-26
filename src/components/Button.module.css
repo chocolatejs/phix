@@ -9,3 +9,14 @@
     justify-content: center;
     box-shadow: var(--basicshadow);
 }
+
+.circleButton{
+    background: var(--actionpurple);
+    border-radius: 50%;
+    box-shadow: var(--basicshadow);
+    width: 3.5rem; height: 3.5rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

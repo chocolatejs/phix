@@ -7,7 +7,7 @@ import FlipMove from 'react-flip-move'
 
 import {List} from '../../components/List'
 import {Icon} from '../../components/Icon'
-import Button from '../../components/Button'
+import Button, {CircleButton} from '../../components/Button'
 
 
 // const ziplist = require('./zipcodes.js').zips //SF and east bay only for mock purposes
@@ -152,6 +152,7 @@ class ZipCheck extends React.Component{
         if(zip.length===6) return
         this.zipCode = zip
         if(this.zipCode.length===5){
+            if(zipcodes.lookup(this.zipCode)===undefined) return
             const locationInfo = zipcodes.lookup(this.zipCode)
             this.computedLocation = {city: locationInfo.city, state: locationInfo.state}
         }
@@ -184,22 +185,26 @@ class ZipCheck extends React.Component{
                     onChange = {(e)=>{this.modifyZIP(e.target.value)}}
                     value = {this.zipCode}
                 />
+                <CircleButton 
+                    img = "check"
+                    className = {[styles.confirmZIPButton, locationReady? styles.show : styles.hidden].join(' ')}
+                />
                 <FlipMove
                     typeName = {null}
-                    // enterAnimation = {!locationReady? {
-                    //     from: {transform: 'translateY(30px)', opacity: 0},
-                    //     to: {transform: 'translateY(0px)', opacity: 2}
-                    // }: {
-                    //     from: {transform: 'translateY(30px)', opacity: 0},
-                    //     to: {transform: 'translateY(0px)', opacity: 2}
-                    // }}
-                    // leaveAnimation = {!locationReady? {
-                    //     from: {transform: 'translateY(0px)', opacity: 1},
-                    //     to: {transform: 'translateY(-30px)', opacity: -1}
-                    // } : {
-                    //     from: {transform: 'translateY(0px)', opacity: 1},
-                    //     to: {transform: 'translateY(30px)', opacity: -1}
-                    // }}
+                    enterAnimation = {!locationReady? {
+                        from: {transform: 'translateY(30px)', opacity: 0},
+                        to: {transform: 'translateY(0px)', opacity: 2}
+                    }: {
+                        from: {transform: 'translateY(-30px)', opacity: 0},
+                        to: {transform: 'translateY(0px)', opacity: 2}
+                    }}
+                    leaveAnimation = {!locationReady? {
+                        from: {transform: 'translateY(0px)', opacity: 1},
+                        to: {transform: 'translateY(-30px)', opacity: -1}
+                    } : {
+                        from: {transform: 'translateY(0px)', opacity: 1},
+                        to: {transform: 'translateY(30px)', opacity: -1}
+                    }}
                 >
 
 
@@ -207,7 +212,7 @@ class ZipCheck extends React.Component{
                         (
                             <div key = "loc" className = {styles.cityState}>
                                 <Icon img = "locationpin" size = "small" className = {styles.icon}/>
-                                {`this.computedLocation.city , this.computedLocation.state`}
+                                {`${this.computedLocation.city}, ${this.computedLocation.state}`}
                             </div>
                         ) : ( 
                             <div key = "decline" className = {styles.decline}> 

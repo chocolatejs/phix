@@ -1,6 +1,8 @@
 import React from 'react'
 import styles from './Button.module.css'
 
+import {Icon} from './Icon.jsx'
+
 const Button = (props) => {
     return(
         <div 
@@ -11,6 +13,19 @@ const Button = (props) => {
             onClick = {props.onClick}
         >
             {props.label}
+        </div>
+    )
+}
+
+export const CircleButton = (props) => {
+    return(
+        <div 
+            className = {[
+                styles.circleButton,
+                props.className
+            ].join(' ')}
+        >
+            <Icon img = {props.img} size = "medium" />
         </div>
     )
 }
