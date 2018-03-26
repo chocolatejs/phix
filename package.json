@@ -6,7 +6,8 @@
     "mobx": "^4.1.0",
     "mobx-react": "^5.0.0",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-flip-move": "^3.0.1"
   },
   "devDependencies": {
     "custom-react-scripts": "0.2.1"

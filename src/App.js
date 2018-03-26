@@ -24,34 +24,54 @@ import styles from './App.module.css';
     repeat 4-6 for every account selected during step 3
   7. 
 */
-const onboardingSteps = [
-  'Tutorial',
-  'Login',
-  'SelectAccounts',
-  'FindAccount'
-]
 class Store {
 
   @observable screen = 'iphone'
 
   @observable workflow = "onboarding"
-  @observable step = 0
+    onboardingSteps = [
+      'Tutorial',
+      'Login',
+      'SelectAccounts',
+      'FindAccount'
+    ]
+  @observable step = 2
   @observable accountsToSync = []
   @observable syncedAccounts = []
+
+  @action toggleAccountToSync = (acct) => {
+    // console.log('selected', acct)
+    if(this.accountsToSync.includes(acct)){
+      this.accountsToSync.splice(this.accountsToSync.indexOf(acct),1)
+    }
+    else{
+      this.accountsToSync.push(acct)
+    }
+  }
 }
 
 const store = new Store()
 window.store = store
 
+@observer
 class App extends Component {
   render() {
     return (
-      <div className={["App", styles[store.screen]].join(' ')}>
+      <div 
+        className={[
+          "App", 
+          styles[store.screen],
+          styles[store[store.workflow+'Steps'][store.step]]
+        ].join(' ')}
+      >
         <Header
           display = {true}
           title = "Bring your data together"
         />
-        <SelectAccounts />
+        <SelectAccounts 
+          onSelect = {store.toggleAccountToSync}
+          selected = {store.accountsToSync}
+        />
         
       </div>
     );

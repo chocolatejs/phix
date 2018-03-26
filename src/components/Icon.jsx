@@ -8,18 +8,17 @@ const iconlist = {
     rx: require('./assets/rx.svg'),
     genetics: require('./assets/genetics.svg'),
     hsapig: require('./assets/hsapig.svg'),
-    wearable: require('./assets/wearable.svg')
+    wearable: require('./assets/wearable.svg'),
+    x: require('./assets/x.svg'),
 }
 
-
-
 export const Icon = (props) => {
-    console.log(iconlist.stethoscope)
     return(
         <div 
-            className = {[styles.icon, styles[props.size]].join(' ')} 
+            className = {[styles.icon, styles[props.size], props.className].join(' ')} 
             // style = {{backgroundImage: 'url("/components/assets/stethoscope.svg")'}}
             style = {{backgroundImage: `url(${iconlist[props.img]})`}}
+            onClick = {props.onClick}
         /> 
     )
 }
