@@ -10,7 +10,8 @@
     "react-flip-move": "^3.0.1"
   },
   "devDependencies": {
-    "custom-react-scripts": "0.2.1"
+    "custom-react-scripts": "0.2.1",
+    "surge": "^0.20.1"
   },
   "scripts": {
     "start": "react-scripts start",
