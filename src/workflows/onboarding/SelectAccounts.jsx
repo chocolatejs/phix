@@ -10,9 +10,9 @@ import {Icon} from '../../components/Icon'
 import Button from '../../components/Button'
 
 
-const ziplist = require('./zipcodes.js').zips //SF and east bay only for mock purposes
+// const ziplist = require('./zipcodes.js').zips //SF and east bay only for mock purposes
 const typelist = require('./accountTypeList.js').syncableAccountTypes
-
+var zipcodes = require('zipcodes')
 /* 2 modes to selectaccounts: 
     1. 'batch': select more than one, then go with button and bottom. only for onboarding
         1.5: 'batch zip check': selected accts change styles, zip check modal
@@ -147,9 +147,14 @@ export default class SelectAccounts extends React.Component{
 class ZipCheck extends React.Component{
 
     @observable zipCode = ''
+    @observable computedLocation = {city: '', state: ''}
     @action modifyZIP = (zip) => {
         if(zip.length===6) return
         this.zipCode = zip
+        if(this.zipCode.length===5){
+            const locationInfo = zipcodes.lookup(this.zipCode)
+            this.computedLocation = {city: locationInfo.city, state: locationInfo.state}
+        }
     }
 
     componentDidMount(){
@@ -174,6 +179,11 @@ class ZipCheck extends React.Component{
                     onChange = {(e)=>{this.modifyZIP(e.target.value)}}
                     value = {this.zipCode}
                 />
+                {this.computedLocation.city && this.computedLocation.state && 
+                    <div className = {styles.cityState}>
+                        {`${this.computedLocation.city}, ${this.computedLocation.state}`}
+                    </div>
+                }
                 <div className = {styles.decline}> No, I'll look manually. </div> 
             </div>
         )
