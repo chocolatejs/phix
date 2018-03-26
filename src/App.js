@@ -36,6 +36,10 @@ class Store {
       'FindAccount'
     ]
   @observable step = 2
+
+  @observable userName = ''
+  @observable userZIP = null
+
   @observable accountsToSync = []
   @observable syncedAccounts = []
 
@@ -71,6 +75,7 @@ class App extends Component {
         <SelectAccounts 
           onSelect = {store.toggleAccountToSync}
           selected = {store.accountsToSync}
+          mode = "batch"
         />
         
       </div>

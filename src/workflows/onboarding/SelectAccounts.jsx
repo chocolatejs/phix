@@ -1,5 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
+import {observable, action} from 'mobx'
 import styles from './SelectAccounts.module.css'
 
 import FlipMove from 'react-flip-move'
@@ -8,32 +9,50 @@ import {List} from '../../components/List'
 import {Icon} from '../../components/Icon'
 import Button from '../../components/Button'
 
+
+const ziplist = require('./zipcodes.js').zips //SF and east bay only for mock purposes
 const typelist = require('./accountTypeList.js').syncableAccountTypes
 
 /* 2 modes to selectaccounts: 
     1. 'batch': select more than one, then go with button and bottom. only for onboarding
         1.5: 'batch zip check': selected accts change styles, zip check modal
     2. 'normal': picking one just takes you straight to that...
+        2.5 (ignore 4 now): 'care prov. zip check': if in normal mode and user
+        adds care provider AND hasn't given ZIP permission...
 */
 
 @observer
 export default class SelectAccounts extends React.Component{
 
-    render(){
+    @observable zipCheck = false
+
+    @action batchSync = () => {
+        if(this.props.selected.includes('Care Provider')){
+            //if care provider's in selected AND we're in batch (first timer) OR we never got user ZIP...
+            this.zipCheck = true
+        }
+    }
+
+    render(){   
         //transform typelist blobs into visual format
-        const computedList = typelist.map((item)=>{
+
+        const list = this.zipCheck? typelist.filter((item)=>{
+            return this.props.selected.includes(item.title)
+        }) : typelist
+
+        const computedList = list.map((item)=>{
             const selected = this.props.selected.includes(item.title)
             const index = this.props.selected.indexOf(item.title)
             const selectedPrefix = index===0? 'First, we\'ll ' : index===1? "Next, we\'ll " : index===this.props.selected.length-1? 'Lastly, we\'ll ' : 'Then let\'s' 
             return(
-                <React.Fragment> 
+                <div overridekey = {item.title+'list-item'}> 
                 <Icon 
                     img = "x" 
                     size = "small" 
-                    className = {styles.x}
+                    className = {[styles.x, this.zipCheck? styles.hidden : ''].join(' ')}
                     onClick = {(selected? ()=>this.props.onSelect(item.title) : ()=>{})}
                 />
-                <div className = {[styles.accountTypeItem, selected? styles.selected: ''].join(' ')}
+                <div className = {[styles.accountTypeItem, this.zipCheck? styles.passive : selected? styles.selected: ''].join(' ')}
                     onClick = {()=>this.props.onSelect(item.title)}
                 >
                     <Icon img = {item.icon} size = "large" className = {styles.icon} />
@@ -71,7 +90,7 @@ export default class SelectAccounts extends React.Component{
                         </FlipMove>
                     </div>
                 </div>
-                </React.Fragment>
+                </div>
             )}
         )
 
@@ -81,7 +100,9 @@ export default class SelectAccounts extends React.Component{
             <div className = {styles.selectAccounts}>
                 <List
                     className = {styles.accountTypeList}
+                    optionClass = {styles.itemWrapper}
                     options = {computedList}
+                    animate
                 />
                 <div className = {styles.bottomButtonWrapper}>
                     <FlipMove 
@@ -105,13 +126,56 @@ export default class SelectAccounts extends React.Component{
                     >
                     {this.props.selected.length >= 1 &&
                         <div className = {styles.startBatchSyncButton}>
-                            <Button className = {styles.btn} label = {syncButtonLabel} onClick = {()=>{console.log('anoteh')}} />
+                            <Button 
+                                className = {styles.btn} 
+                                label = {syncButtonLabel} 
+                                onClick = {this.batchSync} 
+                            />
                         </div>
                     }
                     </FlipMove>
                 </div>
+                {this.zipCheck && //bottom popover?
+                    <ZipCheck />
+                }
             </div>
         )
     }
 
+}
+@observer
+class ZipCheck extends React.Component{
+
+    @observable zipCode = ''
+    @action modifyZIP = (zip) => {
+        if(zip.length===6) return
+        this.zipCode = zip
+    }
+
+    componentDidMount(){
+        this.zipInput.focus()
+        //TODO: add event listener for outside click canceling this
+    }
+    render(){
+        return(
+            <div className = {styles.zipCheck}>
+                <h2 className = {styles.prompt}> 
+                    Can we get your ZIP code?
+                </h2>
+                <p className = {styles.context}>
+                    It's up to you, but it'll help us find your <em>care provider </em>
+                     and allow us to show you more useful information when you're using PHIX.
+                </p>
+                <input 
+                    ref = {(input)=>this.zipInput = input}
+                    className = {styles.zipInput} 
+                    type = "number"  maxLength = "5"
+                    placeholder = "Enter 5-digit ZIP..."
+                    onChange = {(e)=>{this.modifyZIP(e.target.value)}}
+                    value = {this.zipCode}
+                />
+                <div className = {styles.decline}> No, I'll look manually. </div> 
+            </div>
+        )
+    }
 }

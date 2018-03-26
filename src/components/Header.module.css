@@ -1,11 +1,12 @@
 .header{
     background: var(--mediumpurple);
     width: 100%;
+    /*color: var(--faintpurple);*/
     color: white;
     height: 8%;
     font-size: 1rem;
     padding: 1.25rem;
-    letter-spacing: 0.02rem;
+    letter-spacing: 0.03rem;
     display: flex;
     align-items: center;
     box-sizing: border-box;
