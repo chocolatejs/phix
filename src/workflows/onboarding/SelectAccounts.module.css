@@ -166,11 +166,18 @@
     }
     .zipCheck .cityState{
         position: absolute;
+        display: flex; align-items: center;
         margin-top: 1rem;
         bottom: 1.5rem;
         color: var(--mediumpurple);
     }
+    .zipCheck .cityState .icon{
+        margin-right: .25rem;
+    }
     .zipCheck .decline{
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
         position: absolute;
         margin-top: 1rem;
         bottom: 1.5rem;

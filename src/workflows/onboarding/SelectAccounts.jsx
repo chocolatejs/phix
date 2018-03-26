@@ -185,6 +185,7 @@ class ZipCheck extends React.Component{
                     value = {this.zipCode}
                 />
                 <FlipMove
+                    typeName = {null}
                     // enterAnimation = {!locationReady? {
                     //     from: {transform: 'translateY(30px)', opacity: 0},
                     //     to: {transform: 'translateY(0px)', opacity: 2}
@@ -205,9 +206,8 @@ class ZipCheck extends React.Component{
                     {locationReady? 
                         (
                             <div key = "loc" className = {styles.cityState}>
-                                <Icon img = "locationpin" size = "small" />
-                                {this.computedLocation.city},
-                                {this.computedLocation.state}
+                                <Icon img = "locationpin" size = "small" className = {styles.icon}/>
+                                {`this.computedLocation.city , this.computedLocation.state`}
                             </div>
                         ) : ( 
                             <div key = "decline" className = {styles.decline}> 
