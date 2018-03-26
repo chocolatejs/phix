@@ -135,9 +135,21 @@ export default class SelectAccounts extends React.Component{
                     }
                     </FlipMove>
                 </div>
-                {this.zipCheck && //bottom popover?
-                    <ZipCheck />
-                }
+                <FlipMove typeName = {null}
+                    enterAnimation = {{
+                            from: {transform: 'translateY(100%)'},
+                            to: {transform: 'translateY(0px)'}
+                        }}
+                        leaveAnimation = {{
+                            from: {transform: 'translateY(0px)'},
+                            to: {transform: 'translateY(100%)'}
+                        }}
+
+                >
+                    {this.zipCheck && //bottom popover?
+                        <ZipCheck />
+                    }
+                </FlipMove>
             </div>
         )
     }

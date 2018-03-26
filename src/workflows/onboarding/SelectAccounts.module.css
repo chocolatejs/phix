@@ -122,6 +122,7 @@
     align-items: center;
     flex-direction: column;
     padding-bottom: 4rem;
+    z-index: 3;
 }
     .zipCheck .prompt{
         margin: 0;
