@@ -50,10 +50,10 @@ export default class SelectAccounts extends React.Component{
                     img = "x" 
                     size = "small" 
                     className = {[styles.x, this.zipCheck? styles.hidden : ''].join(' ')}
-                    onClick = {(selected? ()=>this.props.onSelect(item.title) : ()=>{})}
+                    onClick = {(!this.zipCheck && selected? ()=>this.props.onSelect(item.title) : ()=>{})}
                 />
                 <div className = {[styles.accountTypeItem, this.zipCheck? styles.passive : selected? styles.selected: ''].join(' ')}
-                    onClick = {()=>this.props.onSelect(item.title)}
+                    onClick = {!this.zipCheck? ()=>this.props.onSelect(item.title) : ()=>{}}
                 >
                     <Icon img = {item.icon} size = "large" className = {styles.icon} />
                     <div className = {styles.text}>
@@ -155,6 +155,10 @@ class ZipCheck extends React.Component{
             const locationInfo = zipcodes.lookup(this.zipCode)
             this.computedLocation = {city: locationInfo.city, state: locationInfo.state}
         }
+        else{
+            this.computedLocation.city = ''
+            this.computedLocation.state = ''
+        }
     }
 
     componentDidMount(){
@@ -162,6 +166,7 @@ class ZipCheck extends React.Component{
         //TODO: add event listener for outside click canceling this
     }
     render(){
+        const locationReady = this.computedLocation.city && this.computedLocation.state
         return(
             <div className = {styles.zipCheck}>
                 <h2 className = {styles.prompt}> 
@@ -179,12 +184,41 @@ class ZipCheck extends React.Component{
                     onChange = {(e)=>{this.modifyZIP(e.target.value)}}
                     value = {this.zipCode}
                 />
-                {this.computedLocation.city && this.computedLocation.state && 
-                    <div className = {styles.cityState}>
-                        {`${this.computedLocation.city}, ${this.computedLocation.state}`}
-                    </div>
-                }
-                <div className = {styles.decline}> No, I'll look manually. </div> 
+                <FlipMove
+                    // enterAnimation = {!locationReady? {
+                    //     from: {transform: 'translateY(30px)', opacity: 0},
+                    //     to: {transform: 'translateY(0px)', opacity: 2}
+                    // }: {
+                    //     from: {transform: 'translateY(30px)', opacity: 0},
+                    //     to: {transform: 'translateY(0px)', opacity: 2}
+                    // }}
+                    // leaveAnimation = {!locationReady? {
+                    //     from: {transform: 'translateY(0px)', opacity: 1},
+                    //     to: {transform: 'translateY(-30px)', opacity: -1}
+                    // } : {
+                    //     from: {transform: 'translateY(0px)', opacity: 1},
+                    //     to: {transform: 'translateY(30px)', opacity: -1}
+                    // }}
+                >
+
+
+                    {locationReady? 
+                        (
+                            <div key = "loc" className = {styles.cityState}>
+                                <Icon img = "locationpin" size = "small" />
+                                {this.computedLocation.city},
+                                {this.computedLocation.state}
+                            </div>
+                        ) : ( 
+                            <div key = "decline" className = {styles.decline}> 
+                                No, I'll look manually. 
+                            </div>
+                        ) 
+                    }
+
+
+                </FlipMove>
+                
             </div>
         )
     }

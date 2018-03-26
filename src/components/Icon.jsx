@@ -10,6 +10,7 @@ const iconlist = {
     hsapig: require('./assets/hsapig.svg'),
     wearable: require('./assets/wearable.svg'),
     x: require('./assets/x.svg'),
+    locationpin: require('./assets/locationpin.svg')
 }
 
 export const Icon = (props) => {
