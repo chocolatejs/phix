@@ -39,6 +39,7 @@ class Store {
 
   @observable userName = ''
   @observable userZIP = null
+  @action setZIP = (zip) => {this.userZIP = zip}
 
   @observable accountsToSync = []
   @observable syncedAccounts = []
@@ -76,6 +77,8 @@ class App extends Component {
           onSelect = {store.toggleAccountToSync}
           selected = {store.accountsToSync}
           mode = "batch"
+          setZIP = {store.setZIP}
+          userZIP = {store.userZIP}
         />
         
       </div>

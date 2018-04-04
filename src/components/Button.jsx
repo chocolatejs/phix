@@ -24,6 +24,7 @@ export const CircleButton = (props) => {
                 styles.circleButton,
                 props.className
             ].join(' ')}
+            onClick = {props.onClick}
         >
             <Icon img = {props.img} size = "medium" />
         </div>

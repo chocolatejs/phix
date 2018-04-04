@@ -26,10 +26,14 @@ export default class SelectAccounts extends React.Component{
 
     @observable zipCheck = false
 
-    @action batchSync = () => {
-        if(this.props.selected.includes('Care Provider')){
+    @action batchSync = (e, forceWithoutZIP) => {
+        console.log(this.props.userZIP, forceWithoutZIP)
+        if(this.props.selected.includes('Care Provider') && !this.props.userZIP && !forceWithoutZIP){
             //if care provider's in selected AND we're in batch (first timer) OR we never got user ZIP...
             this.zipCheck = true
+        }
+        else{
+            alert('going to the first integration')
         }
     }
 
@@ -147,7 +151,11 @@ export default class SelectAccounts extends React.Component{
 
                 >
                     {this.zipCheck && //bottom popover?
-                        <ZipCheck />
+                        <ZipCheck 
+                            onComplete = {this.batchSync}
+                            onDecline = {(e)=>this.batchSync(e,true)}
+                            setZIP = {this.props.setZIP}
+                        />
                     }
                 </FlipMove>
             </div>
@@ -167,6 +175,7 @@ class ZipCheck extends React.Component{
             if(zipcodes.lookup(this.zipCode)===undefined) return
             const locationInfo = zipcodes.lookup(this.zipCode)
             this.computedLocation = {city: locationInfo.city, state: locationInfo.state}
+            this.props.setZIP(this.zipCode)
         }
         else{
             this.computedLocation.city = ''
@@ -200,6 +209,7 @@ class ZipCheck extends React.Component{
                 <CircleButton 
                     img = "check"
                     className = {[styles.confirmZIPButton, locationReady? styles.show : styles.hidden].join(' ')}
+                    onClick = {this.props.onComplete}
                 />
                 <FlipMove
                     typeName = {null}
@@ -227,7 +237,11 @@ class ZipCheck extends React.Component{
                                 {`${this.computedLocation.city}, ${this.computedLocation.state}`}
                             </div>
                         ) : ( 
-                            <div key = "decline" className = {styles.decline}> 
+                            <div 
+                                key = "decline" 
+                                className = {styles.decline}
+                                onClick = {this.props.onDecline}
+                            > 
                                 No, I'll look manually. 
                             </div>
                         ) 
