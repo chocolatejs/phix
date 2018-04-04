@@ -27,7 +27,6 @@ export default class SelectAccounts extends React.Component{
     @observable zipCheck = false
 
     @action batchSync = (e, forceWithoutZIP) => {
-        console.log(this.props.userZIP, forceWithoutZIP)
         if(this.props.selected.includes('Care Provider') && !this.props.userZIP && !forceWithoutZIP){
             //if care provider's in selected AND we're in batch (first timer) OR we never got user ZIP...
             this.zipCheck = true
