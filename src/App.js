@@ -79,7 +79,15 @@ class App extends Component {
       >
         <Header
           display = {true}
-          title = {step==='SelectAccounts'? "Bring your data together" : 'Fuck you'}
+          // title = {step==='SelectAccounts'? "Bring your data together" : 'Fuck you'}
+          titles = {[
+            'Tutorial shit',
+            'Login',
+            'Bring your data together',
+            'Who\'s in your wallet?'  
+          ]}
+          step = {store.step}
+          backButton = {step==='FindAccount'? true : false}
         />
         {step === 'SelectAccounts' && 
           <SelectAccounts 

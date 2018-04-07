@@ -12,22 +12,32 @@ export default class Header extends React.Component{
     }
 
   render(){
-        const {backButton, title} = this.props
+      const {backButton, title, titles, step} = this.props
       return(
         <div className = {styles.header}>
 
-        <div className = {[styles.backButton, backButton? styles.visible : ''].join(' ')}>
-            <Icon img = "chevleft" size = "small" />
-        </div>
-          
-          <FlipMove typeName = {null}>
-            <div 
-                className = {[styles.title, backButton? styles.offsetForBackBtn : ''].join(' ')} 
-                key = {title}
-            > 
-                {title} 
+
+
+          <div className = {[styles.titleWrapper, backButton? styles.offset : ''].join(' ')}>
+            <div className = {[styles.backButton, backButton? styles.visible : ''].join(' ')}>
+              <Icon img = "chevleft" size = "small" />
             </div>
-          </FlipMove>
+            {titles.map((t,i)=>{
+              return(
+                <div 
+                  key = {'header-title-'+t} 
+                  className = {[
+                    styles.title,
+                    i===step? styles.visible:
+                      i>step? styles.inFuture:
+                      styles.inPast
+                  ].join(' ')}
+                > 
+                  {t}
+                </div>
+              )
+            })}
+          </div>
 
         </div>
       )
