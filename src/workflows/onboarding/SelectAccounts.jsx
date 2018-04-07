@@ -32,8 +32,7 @@ export default class SelectAccounts extends React.Component{
             this.zipCheck = true
         }
         else{
-            alert('going to the first integration')
-            console.log('whos your ', this.props.selected[0], '?')
+            this.props.advance()
         }
     }
 

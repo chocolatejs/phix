@@ -3,11 +3,28 @@
     width: 100%;
     /*color: var(--faintpurple);*/
     color: white;
-    height: 8%;
+    height: 60px;
     font-size: 1rem;
-    padding: 1.25rem;
+    box-sizing: border-box;
     letter-spacing: 0.03rem;
     display: flex;
     align-items: center;
-    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.backButton{
+    position: absolute;
+    left: 15px;
+    opacity: 0;
+    transform: translateX(-15px;);
+    transition: transform .2s;
+}
+.backButton.visible{
+    opacity: 1;
+    transform: translateX(0);
+
+}
+
+.title{
+    position: absolute;
 }

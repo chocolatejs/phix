@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 
 import SelectAccounts from './workflows/onboarding/SelectAccounts'
 
-import {Header} from './components/Header'
+import Header from './components/Header'
 // import {List} from './components/List'
 
 import './App.css'
@@ -53,6 +53,12 @@ class Store {
       this.accountsToSync.push(acct)
     }
   }
+  @action goBack = () => {
+    this.step--
+  }
+  @action advance = () => {
+    this.step++
+  }
 }
 
 const store = new Store()
@@ -61,6 +67,8 @@ window.store = store
 @observer
 class App extends Component {
   render() {
+    //onboarding specific for nowv.....
+    const step = store.onboardingSteps[store.step]
     return (
       <div 
         className={[
@@ -71,15 +79,22 @@ class App extends Component {
       >
         <Header
           display = {true}
-          title = "Bring your data together"
+          title = {step==='SelectAccounts'? "Bring your data together" : 'Fuck you'}
         />
-        <SelectAccounts 
-          onSelect = {store.toggleAccountToSync}
-          selected = {store.accountsToSync}
-          mode = "batch"
-          setZIP = {store.setZIP}
-          userZIP = {store.userZIP}
-        />
+        {step === 'SelectAccounts' && 
+          <SelectAccounts 
+            onSelect = {store.toggleAccountToSync}
+            selected = {store.accountsToSync}
+            mode = "batch"
+            setZIP = {store.setZIP}
+            userZIP = {store.userZIP}
+            advance = {store.advance}
+          />
+        }
+        {//step === 'FindAccount' && 
+
+
+        }
         
       </div>
     );

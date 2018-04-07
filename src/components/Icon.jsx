@@ -12,6 +12,7 @@ const iconlist = {
     x: require('./assets/x.svg'),
     locationpin: require('./assets/locationpin.svg'),
     check: require('./assets/check.svg'),
+    chevleft: require('./assets/chevleft.svg'),
 }
 
 export const Icon = (props) => {
