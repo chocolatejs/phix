@@ -33,19 +33,22 @@ export default class SelectAccounts extends React.Component{
         }
         else{
             alert('going to the first integration')
+            console.log('whos your ', this.props.selected[0], '?')
         }
     }
 
     render(){   
         //transform typelist blobs into visual format
 
+        let types = typelist.map((type)=>{return type.title}).filter((title)=>{return this.props.selected.includes(title)})
+        console.log(types)
         const list = this.zipCheck? typelist.filter((item)=>{
             return this.props.selected.includes(item.title)
         }) : typelist
 
         const computedList = list.map((item)=>{
             const selected = this.props.selected.includes(item.title)
-            const index = this.props.selected.indexOf(item.title)
+            const index = types.indexOf(item.title)
             const selectedPrefix = index===0? 'First, we\'ll ' : index===1? "Next, we\'ll " : index===this.props.selected.length-1? 'Lastly, we\'ll ' : 'Then let\'s' 
             return(
                 <div overridekey = {item.title+'list-item'}> 
