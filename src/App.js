@@ -62,8 +62,7 @@ class Store {
         variableTitles.push(accountsAsTitles[ele])
        })
 
-      console.log(variableTitles)
-      return merge(defaultTitles, variableTitles)
+      return defaultTitles.concat(variableTitles)
      }
 
   @observable syncedAccounts = []
