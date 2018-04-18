@@ -1,7 +1,9 @@
 
 import React, { Component } from 'react';
-import {observable, action} from 'mobx'
+import {observable, action, computed} from 'mobx'
 import {observer} from 'mobx-react'
+
+import {merge} from 'lodash'
 
 
 import SelectAccounts from './workflows/onboarding/SelectAccounts'
@@ -42,6 +44,28 @@ class Store {
   @action setZIP = (zip) => {this.userZIP = zip}
 
   @observable accountsToSync = []
+    @computed get onboardingHeaderTitles(){
+ 
+      let variableTitles = []
+      const defaultTitles = ['Tutorial', 'Login', 'Bring your data together']
+      // [Health Insurance, Pharmacy, Care Provider]
+      const accountsAsTitles = {
+        'Care Provider': 'Who\'s your care provider?', 
+        'Health Insurance': 'What health insurance do you have?', 
+        'Pharmacy': 'Which pharmacy do you go to?', 
+        'Genetics': 'What genomics service do you use?',
+        'Health Savings Account': 'Which HSA do you use?',
+        'Wearable Devices': 'What wearable device do you want to add?',
+      }
+
+      this.accountsToSync.forEach((ele,i,arr)=>{
+        variableTitles.push(accountsAsTitles[ele])
+       })
+
+      console.log(variableTitles)
+      return merge(defaultTitles, variableTitles)
+     }
+
   @observable syncedAccounts = []
 
   @action toggleAccountToSync = (acct) => {
@@ -80,12 +104,7 @@ class App extends Component {
         <Header
           display = {true}
           // title = {step==='SelectAccounts'? "Bring your data together" : 'Fuck you'}
-          titles = {[
-            'Tutorial shit',
-            'Login',
-            'Bring your data together',
-            'Who\'s in your wallet?'  
-          ]}
+          titles = {store.onboardingHeaderTitles}
           step = {store.step}
           backButton = {step==='FindAccount'? true : false}
         />
