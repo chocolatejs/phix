@@ -12,14 +12,17 @@ export default class Header extends React.Component{
     }
 
   render(){
-      const {backButton, title, titles, step} = this.props
+      const {backButton, title, titles, step, onBackButtonClick} = this.props
       return(
         <div className = {styles.header}>
 
 
 
           <div className = {[styles.titleWrapper, backButton? styles.offset : ''].join(' ')}>
-            <div className = {[styles.backButton, backButton? styles.visible : ''].join(' ')}>
+            <div 
+                className = {[styles.backButton, backButton? styles.visible : ''].join(' ')}
+                onClick = {onBackButtonClick}
+            >
               <Icon img = "chevleft" size = "small" />
             </div>
             {titles.map((t,i)=>{

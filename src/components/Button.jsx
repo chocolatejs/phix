@@ -31,4 +31,23 @@ export const CircleButton = (props) => {
     )
 }
 
+export const ButtonGroup = (props) => {
+    return(
+        <div className  = {[styles.buttonGroup, props.className].join(' ')} > 
+            {props.options.map((option)=>{
+                    return(
+                        <div 
+                            className = {[styles.option, props.optionClass, option.class].join(' ')}
+                            onClick = {option.onClick}
+                        >   
+                            {option.name}
+                        </div>
+                    )
+                })
+            }
+        </div>
+    )
+}
+
+
 export default Button

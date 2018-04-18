@@ -3,10 +3,8 @@ import React, { Component } from 'react';
 import {observable, action, computed} from 'mobx'
 import {observer} from 'mobx-react'
 
-import {merge} from 'lodash'
-
-
 import SelectAccounts from './workflows/onboarding/SelectAccounts'
+import FindAccount from './workflows/onboarding/FindAccount'
 
 import Header from './components/Header'
 // import {List} from './components/List'
@@ -77,11 +75,13 @@ class Store {
     }
   }
   @action goBack = () => {
+    console.log('going back')
     this.step--
   }
   @action advance = () => {
     this.step++
   }
+  @observable animationDirection = 'forwards'
 }
 
 const store = new Store()
@@ -91,7 +91,10 @@ window.store = store
 class App extends Component {
   render() {
     //onboarding specific for nowv.....
+    
     const step = store.onboardingSteps[store.step]
+    const {animationDirection} = store
+
     return (
       <div 
         className={[
@@ -106,6 +109,8 @@ class App extends Component {
           titles = {store.onboardingHeaderTitles}
           step = {store.step}
           backButton = {step==='FindAccount'? true : false}
+          onBackButtonClick = {store.goBack}
+          animationDirection = {animationDirection}
         />
         {step === 'SelectAccounts' && 
           <SelectAccounts 
@@ -114,11 +119,14 @@ class App extends Component {
             mode = "batch"
             setZIP = {store.setZIP}
             userZIP = {store.userZIP}
-            advance = {store.advance}
+            advance = {store.advance} 
           />
         }
-        {//step === 'FindAccount' && 
+        {step === 'FindAccount' && 
+          <FindAccount
+            key = {step}
 
+          />
 
         }
         
