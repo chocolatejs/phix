@@ -32,12 +32,19 @@ export const CircleButton = (props) => {
 }
 
 export const ButtonGroup = (props) => {
+    console.log(props.options)
     return(
         <div className  = {[styles.buttonGroup, props.className].join(' ')} > 
             {props.options.map((option)=>{
                     return(
                         <div 
-                            className = {[styles.option, props.optionClass, option.class].join(' ')}
+                            key = {`buttongroup-${props.className}-${option.name}`}
+                            className = {[
+                                styles.option, 
+                                props.optionClass, 
+                                option.class,
+                                props.toggle && option.active? styles.active : props.toggle? styles.inactive : '' 
+                            ].join(' ')}
                             onClick = {option.onClick}
                         >   
                             {option.name}

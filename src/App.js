@@ -125,7 +125,9 @@ class App extends Component {
         {step === 'FindAccount' && 
           <FindAccount
             key = {step}
-
+            
+            // categories = {}
+            // entries = {}
           />
 
         }

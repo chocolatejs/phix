@@ -11,7 +11,8 @@ import Button, {CircleButton} from '../../components/Button'
 
 
 // const ziplist = require('./zipcodes.js').zips //SF and east bay only for mock purposes
-const typelist = require('./accountTypeList.js').syncableAccountTypes
+// const typelist = require('./accountTypeList.js').syncableAccountTypes
+import syncableAccountTypes from './accountTypeList'
 var zipcodes = require('zipcodes')
 /* 2 modes to selectaccounts: 
     1. 'batch': select more than one, then go with button and bottom. only for onboarding
@@ -39,11 +40,11 @@ export default class SelectAccounts extends React.Component{
     render(){   
         //transform typelist blobs into visual format
 
-        let types = typelist.map((type)=>{return type.title}).filter((title)=>{return this.props.selected.includes(title)})
+        let types = syncableAccountTypes.map((type)=>{return type.title}).filter((title)=>{return this.props.selected.includes(title)})
         console.log(types)
-        const list = this.zipCheck? typelist.filter((item)=>{
+        const list = this.zipCheck? syncableAccountTypes.filter((item)=>{
             return this.props.selected.includes(item.title)
-        }) : typelist
+        }) : syncableAccountTypes
 
         const computedList = list.map((item)=>{
             const selected = this.props.selected.includes(item.title)
