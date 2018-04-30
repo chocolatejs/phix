@@ -13,6 +13,13 @@ const iconlist = {
     locationpin: require('./assets/locationpin.svg'),
     check: require('./assets/check.svg'),
     chevleft: require('./assets/chevleft.svg'),
+
+    stanford: require('./assets/companies/stanford.svg'),
+    kaiser: require('./assets/companies/kaiser.svg'),
+    dignityhealth: require('./assets/companies/dignityhealth.svg'),
+    onemedical: require('./assets/companies/onemedical.svg'),
+    sutter: require('./assets/companies/sutter.svg'),
+    ucsf: require('./assets/companies/ucsf.svg'),
 }
 
 export const Icon = (props) => {

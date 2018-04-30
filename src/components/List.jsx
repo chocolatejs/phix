@@ -12,7 +12,11 @@ export const List = (props) => {
                 // staggerDelayBy = {25}
                 staggerDurationBy = {40}
                 disableAllAnimations = {!props.animate}
-                leaveAnimation = {{
+                enterAnimation = {props.enterAnimation || {
+                    from: {transform: 'translateX(100px)', opacity: 0},
+                    to: {transform: 'translateX(0px)', opacity: 1}
+                }}
+                leaveAnimation = {props.leaveAnimation || {
                     from: {transform: 'translateX(0px)', opacity: 1},
                     to: {transform: 'translateX(-100px)', opacity: 0}
                 }}
@@ -20,7 +24,7 @@ export const List = (props) => {
                 {props.options.map((option,i)=>(
                     <li 
                         className = {[styles.option, props.optionClass].join(' ')}
-                        key = {option.props.overridekey || 'listoption'+i}
+                        key = {option.props? option.props.overridekey || 'listoption'+i :  'listoption'+i}
                     > 
                         {option} 
                     </li>

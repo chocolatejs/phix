@@ -9,6 +9,8 @@ import FindAccount from './workflows/onboarding/FindAccount'
 import Header from './components/Header'
 // import {List} from './components/List'
 
+// import syncableAccountTypes from './workflows/onboarding/accountTypeList'
+
 import './App.css'
 import styles from './App.module.css';
 
@@ -42,7 +44,7 @@ class Store {
   @action setZIP = (zip) => {this.userZIP = zip}
 
   @observable accountsToSync = []
-    @computed get onboardingHeaderTitles(){
+   @computed get onboardingHeaderTitles(){
  
       let variableTitles = []
       const defaultTitles = ['Tutorial', 'Login', 'Bring your data together']
@@ -61,6 +63,16 @@ class Store {
        })
 
       return defaultTitles.concat(variableTitles)
+     }
+
+     @computed get whatAccountAmIFinding(){
+      console.log('wat acct?')
+      if(this.onboardingSteps[this.step] === 'FindAccount'){
+        //accounts to sync
+        console.log('user is finding acct', this.accountsToSync)
+        return true
+      }
+      else console.log('user is not finding acct')
      }
 
   @observable syncedAccounts = []
@@ -125,7 +137,8 @@ class App extends Component {
         {step === 'FindAccount' && 
           <FindAccount
             key = {step}
-            
+            accts = {store.accountsToSync}
+            // whatAcct = {this.whatAccountAmIFinding}
             // categories = {}
             // entries = {}
           />
