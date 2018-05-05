@@ -19,10 +19,22 @@ const mockEntryLists = {
 export default class FindAccount extends React.Component{
     @observable step = 0
     @observable filteringBy = 'network'
+    @observable readyToAnimate = true
+    @observable animateDirection = 1
     @action filterListByType = (type) => {
+        if(!this.readyToAnimate){
+            console.log('not ready to animate, canceling filter')
+            return
+        }
+        //get indices to determine animation direction
+        const filters = ['network', 'hospital', 'doctor']
+        if(filters.indexOf(type) > filters.indexOf(this.filteringBy)) this.animateDirection = 1
+        if(filters.indexOf(type) < filters.indexOf(this.filteringBy)) this.animateDirection = -1
+
         console.log('filtering by ', type)
         this.filteringBy = type
     }
+    @action setAnimateReady = (ready) => this.readyToAnimate = ready
     render(){
         console.log(this.props.accts[this.step])
         const {filteringBy} = this
@@ -60,9 +72,23 @@ export default class FindAccount extends React.Component{
                     ]}
                     optionClass = {styles.filterOption}
                 />
-                <div className = {styles.list}>
+                <div className = {styles.listWrapper}>
                     <List
+                        className = {styles.list}
                         animate
+                        animateDuration = {275}
+                        animateStagger = {15}
+                        // animateDirection = {-1}
+                        enterAnimation = {{
+                            from: { transform: `translateX(${this.animateDirection*100}px)`, opacity: 0 },
+                            to: {transform: 'translateX(0)', opacity: 1}
+                        }}
+                        leaveAnimation = {{
+                            to: { transform: `translateX(${this.animateDirection*-100}px)`, opacity: 0 },
+                            from: {transform: 'translateX(0)', opacity: 1}
+                        }}
+                        onAnimateStart = {()=>this.setAnimateReady(false)} //cb prevents fast switch jank
+                        onAnimateEnd = {()=>this.setAnimateReady(true)} //cb prevents fast switch jank
                         // animate = {false}
                         options = {computedEntryList}
                     />

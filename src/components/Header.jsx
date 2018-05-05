@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Header.module.css'
 import {Icon} from './Icon' 
 
-import FlipMove from 'react-flip-move'
+// import FlipMove from 'react-flip-move'
 
 
 export default class Header extends React.Component{
@@ -12,7 +12,7 @@ export default class Header extends React.Component{
     }
 
   render(){
-      const {backButton, title, titles, step, onBackButtonClick} = this.props
+      const {backButton, titles, step, onBackButtonClick} = this.props
       return(
         <div className = {styles.header}>
 
