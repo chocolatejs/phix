@@ -1,3 +1,8 @@
+import {sortBy} from 'lodash'
+
+var doctors = require('../../mockdata/doctors.json')
+doctors = sortBy(doctors, 'name')
+
 const careProviders = [
     //networks have icon
     {name: 'Dignity Health', type: 'network', logo: 'dignityhealth'},
@@ -23,7 +28,7 @@ const careProviders = [
     {name: 'Arthur Law, MD', type: 'doctor', specialty: 'Pediatrician', network: 'Stanford Health Care'},
     {name: 'Anderson Eng, D.O.', type: 'doctor', specialty: 'Internal Medicine', network: 'Chinese Hospital'},
     {name: 'Dr. Anousheh Ashouri', type: 'doctor', specialty: 'iono', network: 'Kaiser Permanente'},
-]
+].concat(doctors)
 
 const insurers = [
     {name: 'Anthem BlueCross BlueShield'},

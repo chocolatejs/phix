@@ -13,12 +13,31 @@
 
 .entry{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     padding: 10px 20px;
     background: white;
-    width: 125vw;
+    /*width: 125vw;*/
     color: var(--mediumpurple);
 }
+.entry.hospital, .entry.doctor{
+    padding: 15px 25px;
+}
+
+.entry .title{
+    color: var(--textpurple);
+    white-space: nowrap;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.entry .subtitle{
+    width: 100%;
+    padding-top: 2px;
+    color: var(--mediumpurple);
+}
+
 .options{
     border-bottom: 1px solid #c4c4c4;
 }

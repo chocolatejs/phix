@@ -50,12 +50,36 @@ export default class FindAccount extends React.Component{
             return(
                <div 
                 overridekey = {entry.name}
-                className = {styles.entry}>
-                    {filteringBy === 'network' &&
-                        <Icon img = {entry.logo} size = "large" className = {styles.icon} />
+                className = {[styles.entry, styles[entry.type]].join(' ')}>
+                    {entry.type === 'network' &&
+                        <React.Fragment> 
+                            <Icon img = {entry.logo} size = "large" className = {styles.icon} />
+                            {entry.name}
+                        </React.Fragment>
                     }
-                    {entry.name}
-                    
+                    {entry.type === 'hospital' &&
+                        <React.Fragment>
+                            <div className = {styles.title}> {entry.name} </div>
+                            <div className = {styles.subtitle}> {entry.address} </div>
+                            {entry.network && 
+                                <div className = {styles.subtitle}> {entry.network} </div>
+                            }
+                        </React.Fragment>
+                    }
+                    {entry.type === 'doctor' &&
+                        <React.Fragment>
+                            <div className = {styles.title}> {entry.name} </div>
+                            {entry.specialty && 
+                                <div className = {styles.subtitle}> {entry.specialty} </div>
+                            }
+                            {entry.network &&
+                                <div className = {styles.subtitle}> {entry.network} </div>
+                            }
+                            {!entry.network && entry.address &&
+                                <div className = {styles.subtitle}> {entry.address} </div>
+                            }
+                        </React.Fragment>
+                    }
 
                </div> 
             )
