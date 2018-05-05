@@ -63,15 +63,17 @@ export default class FindAccount extends React.Component{
 
         return (
             <div className = {styles.findAccount}>
-                <ButtonGroup
-                    toggle
-                    options = {[
-                        {name: 'Networks', onClick: ()=>{this.filterListByType('network')}, active: filteringBy === 'network'},
-                        {name: 'Hospitals', onClick: ()=>{this.filterListByType('hospital')}, active: filteringBy === 'hospital'},
-                        {name: 'Doctors', onClick: ()=>{this.filterListByType('doctor')}, active: filteringBy === 'doctor'},
-                    ]}
-                    optionClass = {styles.filterOption}
-                />
+                <div className = {styles.filters}>
+                    <ButtonGroup
+                        toggle
+                        options = {[
+                            {name: 'Networks', onClick: ()=>{this.filterListByType('network')}, active: filteringBy === 'network'},
+                            {name: 'Hospitals', onClick: ()=>{this.filterListByType('hospital')}, active: filteringBy === 'hospital'},
+                            {name: 'Doctors', onClick: ()=>{this.filterListByType('doctor')}, active: filteringBy === 'doctor'},
+                        ]}
+                        optionClass = {styles.filterOption}
+                    />
+                </div>
                 <div className = {styles.listWrapper}>
                     <List
                         className = {styles.list}
@@ -79,6 +81,7 @@ export default class FindAccount extends React.Component{
                         animateDuration = {275}
                         animateStagger = {15}
                         // animateDirection = {-1}
+                        optionClass = {styles.options}
                         enterAnimation = {{
                             from: { transform: `translateX(${this.animateDirection*100}px)`, opacity: 0 },
                             to: {transform: 'translateX(0)', opacity: 1}

@@ -32,7 +32,6 @@ export const CircleButton = (props) => {
 }
 
 export const ButtonGroup = (props) => {
-    console.log(props.options)
     return(
         <div className  = {[styles.buttonGroup, props.className].join(' ')} > 
             {props.options.map((option)=>{
