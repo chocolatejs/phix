@@ -17,10 +17,17 @@ const mockEntryLists = {
 
 @observer
 export default class FindAccount extends React.Component{
-    @observable step = 0
-    @observable filteringBy = 'network'
+    @observable step = 0 //which # acct are we on in the accts user chose to sync? 
+       @observable selected = null //the name of item user selects from list
+       // @observable mode = 'search' //search > login > confirm > 2FA > load # then next step
+    @observable filteringBy = 'network' //only applicable to care provider i think
+    //list animation stuff
     @observable readyToAnimate = true
     @observable animateDirection = 1
+    
+
+    // @action setMode = (mode) => this.mode = mode
+    @action select = (item) => this.selected = item
     @action filterListByType = (type) => {
         if(!this.readyToAnimate){
             console.log('not ready to animate, canceling filter')
@@ -39,18 +46,22 @@ export default class FindAccount extends React.Component{
         console.log(this.props.accts[this.step])
         const {filteringBy} = this
 
-        const computedEntryList = mockEntryLists[this.props.accts[this.step]]
+        const computedEntryList =  mockEntryLists[this.props.accts[this.step]]
             .filter((entry)=>{
                 //flawed but care providers is the only filterable option for now
+                // if(this.searching) return entry.name.includes(searchstring)
+                if(this.selected) return entry.name === this.selected
                 if(this.props.accts[this.step]==='Care Provider') return entry.type===this.filteringBy
                 else return entry
             })
             .map((entry)=>{
             //filter?
             return(
-               <div 
-                overridekey = {entry.name}
-                className = {[styles.entry, styles[entry.type]].join(' ')}>
+                <div 
+                    overridekey = {entry.name}
+                    className = {[styles.entry, styles[entry.type]].join(' ')}
+                    onClick = {()=>{this.select(entry.name)}}
+                >
                     {entry.type === 'network' &&
                         <React.Fragment> 
                             <Icon img = {entry.logo} size = "large" className = {styles.icon} />
@@ -87,20 +98,19 @@ export default class FindAccount extends React.Component{
 
         return (
             <div className = {styles.findAccount}>
-                <div className = {styles.filters}>
-                    <ButtonGroup
-                        toggle
-                        options = {[
-                            {name: 'Networks', onClick: ()=>{this.filterListByType('network')}, active: filteringBy === 'network'},
-                            {name: 'Hospitals', onClick: ()=>{this.filterListByType('hospital')}, active: filteringBy === 'hospital'},
-                            {name: 'Doctors', onClick: ()=>{this.filterListByType('doctor')}, active: filteringBy === 'doctor'},
-                        ]}
-                        optionClass = {styles.filterOption}
-                    />
-                </div>
-                <div className = {styles.listWrapper}>
-                    <List
-                        className = {styles.list}
+                    <div className = {[styles.filters, this.selected? styles.hidden : ''].join(' ')}>
+                        <ButtonGroup
+                            toggle
+                            options = {[
+                                {name: 'Networks', onClick: ()=>{this.filterListByType('network')}, active: filteringBy === 'network'},
+                                {name: 'Hospitals', onClick: ()=>{this.filterListByType('hospital')}, active: filteringBy === 'hospital'},
+                                {name: 'Doctors', onClick: ()=>{this.filterListByType('doctor')}, active: filteringBy === 'doctor'},
+                            ]}
+                            optionClass = {styles.filterOption}
+                        />
+                    </div>
+                   <List
+                        className = {[styles.list, this.selected? styles.shiftedUp : ''].join(' ')}
                         animate
                         animateDuration = {275}
                         animateStagger = {15}
@@ -119,8 +129,27 @@ export default class FindAccount extends React.Component{
                         // animate = {false}
                         options = {computedEntryList}
                     />
-                </div>
+
+                    {this.selected && 
+                        <div className = {styles.loginToIntegration}>
+                            
+                        </div>
+
+                    }
+                
+
             </div>  
         )
     }
 }
+
+// class LoginToIntegration extends React.Component{
+
+//     render(){
+//         return(
+//             <div className = {styles.loginToIntegration} >
+
+//             </div>
+//         )
+//     }
+// }
