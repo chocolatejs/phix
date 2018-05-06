@@ -59,7 +59,11 @@ export default class FindAccount extends React.Component{
             return(
                 <div 
                     overridekey = {entry.name}
-                    className = {[styles.entry, styles[entry.type]].join(' ')}
+                    className = {[
+                        styles.entry, 
+                        styles[entry.type],
+                        entry.name===this.selected? styles.selected : ''
+                    ].join(' ')}
                     onClick = {()=>{this.select(entry.name)}}
                 >
                     {entry.type === 'network' &&
@@ -112,7 +116,7 @@ export default class FindAccount extends React.Component{
                    <List
                         className = {[styles.list, this.selected? styles.shiftedUp : ''].join(' ')}
                         animate
-                        animateDuration = {275}
+                        animateDuration = {350}
                         animateStagger = {15}
                         // animateDirection = {-1}
                         optionClass = {styles.options}
