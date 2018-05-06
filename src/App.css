@@ -4,6 +4,9 @@ html{
     touch-action: manipulation;
     overflow-x: hidden;
     position: relative;
+
+    user-select: none;
+        /*this should disable accidental text selection in mobile browsers etc.*/
 }
 
 *{

@@ -17,6 +17,7 @@
 }
 
 .entry{
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -56,6 +57,19 @@
 
 .entry .icon{
     margin-right: 15px;
+}
+
+.entry .loginMask{
+    position: absolute;
+    /*bottom: 0;*/
+    top: 100%;
+    height: 100vh;
+    left: 0;
+    width: 100%;
+    background: var(--offwhite);
+    transform-origin: 50% 0%;
+    opacity: 0;
+    animation: expandingMask .4s .35s forwards;
 }
 
 .listWrapper{

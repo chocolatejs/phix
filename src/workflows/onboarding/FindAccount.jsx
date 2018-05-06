@@ -96,6 +96,9 @@ export default class FindAccount extends React.Component{
                         </React.Fragment>
                     }
 
+                {entry.name===this.selected && 
+                    <div className = {styles.loginMask} />
+                }
                </div> 
             )
         })
@@ -134,12 +137,26 @@ export default class FindAccount extends React.Component{
                         options = {computedEntryList}
                     />
 
-                    {this.selected && 
-                        <div className = {styles.loginToIntegration}>
-                            
+                    <FlipMove
+                        enterAnimation = {{
+                            from: {opacity: 0},
+                            to: {opacity: 1}
+                        }}
+                        leaveAnimation = {{
+                            from: {opacity: 1}, to: {opacity: 0}
+                        }}
+                    >
+                    {this.selected &&
+                        <div className = {styles.integrationLogin}>
+                            <input />
+                            <input />
+                            <Button
+                                label = "Securely sign in"
+                            />
+                            <div className = {styles.forgotPass}> Forgot your password? </div>
                         </div>
-
                     }
+                    </FlipMove>
                 
 
             </div>  
