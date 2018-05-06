@@ -2,7 +2,9 @@ import React from 'react'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
 
-import {ButtonGroup} from '../../components/Button'
+import FlipMove from 'react-flip-move'
+
+import Button, {ButtonGroup} from '../../components/Button'
 import styles from './FindAccount.module.css'
 
 // import syncableAccountTypes from './workflows/onboarding'
@@ -145,6 +147,7 @@ export default class FindAccount extends React.Component{
                         leaveAnimation = {{
                             from: {opacity: 1}, to: {opacity: 0}
                         }}
+                        delay = {400}
                     >
                     {this.selected &&
                         <div className = {styles.integrationLogin}>

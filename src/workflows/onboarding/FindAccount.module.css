@@ -69,7 +69,7 @@
     background: var(--offwhite);
     transform-origin: 50% 0%;
     opacity: 0;
-    animation: expandingMask .4s .35s forwards;
+    animation: expandingMask .4s .3s forwards;
 }
 
 .listWrapper{
@@ -86,7 +86,14 @@
     transform: translateY(-92px);
 }
 
-.loginToIntegration{
+.integrationLogin{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/*.loginToIntegration{
     position: absolute;
     width: 100%;
     height: 100vh;
@@ -95,7 +102,7 @@
     transform-origin: 50% 0%;
     opacity: 0;
     animation: expandingMask .4s .35s forwards;
-}
+}*/
 
 
 
