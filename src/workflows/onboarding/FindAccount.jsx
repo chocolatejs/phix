@@ -148,12 +148,14 @@ export default class FindAccount extends React.Component{
                             from: {opacity: 1}, to: {opacity: 0}
                         }}
                         delay = {400}
+                        className = {styles.loginContainer}
                     >
                     {this.selected &&
                         <div className = {styles.integrationLogin}>
-                            <input />
-                            <input />
+                            <input className = {[styles.input,styles.userName].join(' ')} />
+                            <input className = {[styles.input,styles.password].join(' ')} />
                             <Button
+                                className = {styles.signInButton}
                                 label = "Securely sign in"
                             />
                             <div className = {styles.forgotPass}> Forgot your password? </div>

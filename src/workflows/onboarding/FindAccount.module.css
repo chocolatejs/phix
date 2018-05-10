@@ -82,7 +82,7 @@
     margin-top: 5px;
     transition: transform .4s;
 }
-.list.shiftedUp{
+.list.shiftedUp, .loginContainer{
     transform: translateY(-92px);
 }
 
@@ -92,19 +92,35 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+    .integrationLogin input{
+        /*width: 100%;*/
+        font-size: 16px;
+        width: 80%;
+        box-sizing: border-box;
+        padding: 15px 20px;
+    }
+    .integrationLogin input.userName{
+        appearance: none;
+        outline: none;
+        border: 1px solid #c4c4c4;
+        border-bottom-color: transparent;
+        border-radius: 8px 8px 0 0;
+    }
+    .integrationLogin input.password{
+        border-radius: 0 0 8px 8px;
+        border: 1px solid #c4c4c4;
+    }
+    .integrationLogin .signInButton{
+        margin-top: 20px;
 
-/*.loginToIntegration{
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    top: 120px;
-    background: var(--offwhite);
-    transform-origin: 50% 0%;
-    opacity: 0;
-    animation: expandingMask .4s .35s forwards;
-}*/
-
-
+    }
+    .integrationLogin .forgotPass{
+        margin-top: 30px;
+        width: 100%;
+        text-align: center;
+        color: var(--actionpurple);
+        
+    }
 
 
 @keyframes expandingMask{
