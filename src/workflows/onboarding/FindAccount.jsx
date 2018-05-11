@@ -5,7 +5,10 @@ import {observer} from 'mobx-react'
 import FlipMove from 'react-flip-move'
 
 import Button, {ButtonGroup} from '../../components/Button'
+import MockOutsideApp from '../../components/MockOutsideApp'
+
 import styles from './FindAccount.module.css'
+
 
 // import syncableAccountTypes from './workflows/onboarding'
 import {List} from '../../components/List'
@@ -26,7 +29,7 @@ export default class FindAccount extends React.Component{
     //list animation stuff
     @observable readyToAnimate = true
     @observable animateDirection = 1
-    
+    @observable appOverlay = false
 
     // @action setMode = (mode) => this.mode = mode
     @action select = (item) => this.selected = item
@@ -44,6 +47,7 @@ export default class FindAccount extends React.Component{
         this.filteringBy = type
     }
     @action setAnimateReady = (ready) => this.readyToAnimate = ready
+    @action toggleFakeApp = () => { this.appOverlay = !this.appOverlay }
     render(){
         console.log(this.props.accts[this.step])
         const {filteringBy} = this
@@ -157,12 +161,17 @@ export default class FindAccount extends React.Component{
                             <Button
                                 className = {styles.signInButton}
                                 label = "Securely sign in"
+                                onClick = {this.toggleFakeApp}
                             />
                             <div className = {styles.forgotPass}> Forgot your password? </div>
                         </div>
                     }
                     </FlipMove>
                 
+                    <MockOutsideApp
+                        app = "myChart"
+                        display = {this.appOverlay}
+                    />
 
             </div>  
         )

@@ -20,6 +20,8 @@ const iconlist = {
     onemedical: require('./assets/companies/onemedical.svg'),
     sutter: require('./assets/companies/sutter.svg'),
     ucsf: require('./assets/companies/ucsf.svg'),
+
+    myChart: require('./assets/companies/mychart.png'),
 }
 
 export const Icon = (props) => {
