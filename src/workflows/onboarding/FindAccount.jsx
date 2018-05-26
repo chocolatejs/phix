@@ -22,9 +22,10 @@ const mockEntryLists = {
 
 @observer
 export default class FindAccount extends React.Component{
-    @observable step = 0 //which # acct are we on in the accts user chose to sync? 
+    @observable accountTypeIndex = 0 //which # acct are we on in the accts user chose to sync? 
        @observable selected = null //the name of item user selects from list
-       // @observable mode = 'search' //search > login > confirm > 2FA > load # then next step
+       @observable mode = 'search' // search, integrate (login + outsideapp), loading, next 
+       @action setMode = (newMode) => this.mode = newMode
     @observable filteringBy = 'network' //only applicable to care provider i think
     //list animation stuff
     @observable readyToAnimate = true
@@ -32,7 +33,10 @@ export default class FindAccount extends React.Component{
     @observable appOverlay = false
 
     // @action setMode = (mode) => this.mode = mode
-    @action select = (item) => this.selected = item
+    @action select = (item) =>{ 
+        this.selected = item
+        this.setMode('integrate')
+    }
     @action filterListByType = (type) => {
         if(!this.readyToAnimate){
             console.log('not ready to animate, canceling filter')
@@ -49,15 +53,15 @@ export default class FindAccount extends React.Component{
     @action setAnimateReady = (ready) => this.readyToAnimate = ready
     @action toggleFakeApp = () => { this.appOverlay = !this.appOverlay }
     render(){
-        console.log(this.props.accts[this.step])
+        console.log(this.props.accts[this.accountTypeIndex])
         const {filteringBy} = this
 
-        const computedEntryList =  mockEntryLists[this.props.accts[this.step]]
+        const computedEntryList =  mockEntryLists[this.props.accts[this.accountTypeIndex]]
             .filter((entry)=>{
                 //flawed but care providers is the only filterable option for now
                 // if(this.searching) return entry.name.includes(searchstring)
                 if(this.selected) return entry.name === this.selected
-                if(this.props.accts[this.step]==='Care Provider') return entry.type===this.filteringBy
+                if(this.props.accts[this.accountTypeIndex]==='Care Provider') return entry.type===this.filteringBy
                 else return entry
             })
             .map((entry)=>{
@@ -111,6 +115,7 @@ export default class FindAccount extends React.Component{
 
         return (
             <div className = {styles.findAccount}>
+
                     <div className = {[styles.filters, this.selected? styles.hidden : ''].join(' ')}>
                         <ButtonGroup
                             toggle
@@ -142,7 +147,6 @@ export default class FindAccount extends React.Component{
                         // animate = {false}
                         options = {computedEntryList}
                     />
-
                     <FlipMove
                         enterAnimation = {{
                             from: {opacity: 0},
@@ -171,6 +175,11 @@ export default class FindAccount extends React.Component{
                     <MockOutsideApp
                         app = "myChart"
                         display = {this.appOverlay}
+                        // close = {this.toggleFakeApp}
+                        onConfirm = {()=>{
+                            this.toggleFakeApp()
+                            this.setMode('uploading')
+                        }}
                     />
 
             </div>  

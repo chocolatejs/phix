@@ -12,7 +12,7 @@ import styles from './MockOutsideApp.module.css'
 export default class MockOutsideApp extends React.Component{
     @observable present = false 
     @observable mode = 'splash'
-    @action appear = () => {console.log('appear'); this.present=!this.present}
+    @action appear = () => {console.log('appear'); this.present=true}
     @action hide = () => {console.log('hide'); this.present=false}
     @action unsetSplash = () => {console.log('unsetting splash!'); this.mode = 'content'}
 
@@ -35,12 +35,12 @@ export default class MockOutsideApp extends React.Component{
                     to: {transform: 'translateY(0)'}
                 }}
                 leaveAnimation = {{
-                    from: {transform:' translateY(0)'},
-                    to: {tranform: 'translateY(100%)'}
+                    from: {transform:' translateY(0%)'},
+                    to: {transform: 'translateY(100%)'}
                 }}
                 className = {[styles.flipmoveContainer, this.props.className].join(' ')}
                 onStartAll = {this.appear}
-                // onFinishAll = {this.hide}
+                onFinishAll = {!this.props.display? this.hide : ''}
             >
                 {this.props.display && 
                     <div className = {styles[this.props.app]}>
@@ -61,7 +61,7 @@ export default class MockOutsideApp extends React.Component{
                                         </p>
                                         <div className = {styles.actions}>
                                             <Button className = {[styles.button, styles.cancel].join(' ')} label = "Cancel" />
-                                            <Button className = {[styles.button, styles.ok].join(' ')} label = "OK" />
+                                            <Button className = {[styles.button, styles.ok].join(' ')} label = "OK" onClick = {this.props.onConfirm} />
                                         </div>
                                 </div>
                                 </div>

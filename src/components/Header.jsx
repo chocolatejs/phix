@@ -42,6 +42,10 @@ export default class Header extends React.Component{
             })}
 
           </div>
+
+          <div className = {styles.right}>
+            {this.props.rightSide}
+          </div>
         </div>
       )
     }
