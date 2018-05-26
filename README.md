@@ -8,6 +8,7 @@
    
 ### webpack.config.js in /.storybook for enabling CSS modules
 * by default storybook will key off CRA's default config, but because it's actually custom-react-scripts, we need to modify the webpack config to understand CSS as modules
+* below is the config i used that got it working
 ```
 const path = require("path");
 
