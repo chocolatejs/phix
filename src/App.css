@@ -8,6 +8,9 @@ html{
     user-select: none;
         /*this should disable accidental text selection in mobile browsers etc.*/
 }
+body{
+    margin: 0;
+}
 
 *{
         /*position: relative;*/

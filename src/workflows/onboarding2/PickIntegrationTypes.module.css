@@ -1,8 +1,6 @@
-.selectAccounts{
-    border: 1px solid black;
-}
 
-.selectAccounts{
+
+.pickIntegrationTypes{
     display: flex;
     flex-direction: column;
     justify-content: space-between;

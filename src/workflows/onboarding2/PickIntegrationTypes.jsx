@@ -99,7 +99,7 @@ export default class PickIntegrationTypes extends React.Component{
         const syncButtonLabel = this.selected.length===1? 'Sync ' + this.selected[0] : 'Sync ' + this.selected.length + ' Accounts'
 
         return(
-            <div className = {[styles.pickIntegrationTypes, 'pickIntegrationTypes'].join(' ')}>
+            <div className = {styles.pickIntegrationTypes}>
                 <List
                     className = {styles.accountTypeList}
                     optionClass = {styles.itemWrapper}
